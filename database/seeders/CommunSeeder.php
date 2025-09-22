@@ -14,31 +14,46 @@ class CommunSeeder extends Seeder
      */
     public function run(): void
     {
-        $jsonPath = database_path('data/wilayas_communes.json');
-
-        if (!file_exists($jsonPath)) {
-            $this->command->error("JSON file not found at: $jsonPath");
-            return;
-        }
-
-        $data = json_decode(file_get_contents($jsonPath), true);
-
-        foreach ($data as $wilayaData) {
-            $wilaya = Wilaya::firstWhere('code', $wilayaData['code']);
-
+        // Load the wilayas data
+        $wilayasData = require database_path('data/wilayas.php');
+        
+        // Track processed wilayas to avoid duplicates
+        $processedWilayas = [];
+        
+        foreach ($wilayasData as $entry) {
+            $wilayaNameAscii = $entry['wilaya_name_ascii'];
+            $wilayaCode = $entry['wilaya_code'];
+            $communeNameAscii = $entry['commune_name_ascii'];
+            
+            // Check if wilaya already exists in database
+            $wilaya = Wilaya::where('name', $wilayaNameAscii)->first();
+            
             if (!$wilaya) {
-                $this->command->warn("Wilaya not found for code: {$wilayaData['code']}");
-                continue;
-            }
-
-            foreach ($wilayaData['communes'] ?? [] as $communeName) {
-                Commun::create([
-                    'name' => $communeName,
-                    'wilaya_id' => $wilaya->id,
+                // Create new wilaya if it doesn't exist
+                $wilaya = Wilaya::create([
+                    'name' => $wilayaNameAscii,
+                    'code' => $wilayaCode
                 ]);
+                
+                echo "Created wilaya: {$wilayaNameAscii} (Code: {$wilayaCode})\n";
+            }
+            
+            // Check if commune already exists for this wilaya
+            $existingCommune = Commun::where('name', $communeNameAscii)
+                                   ->where('wilaya_id', $wilaya->id)
+                                   ->first();
+            
+            if (!$existingCommune) {
+                // Create new commune
+                Commun::create([
+                    'name' => $communeNameAscii,
+                    'wilaya_id' => $wilaya->id
+                ]);
+                
+               // echo "Created commune: {$communeNameAscii} for wilaya: {$wilayaNameAscii}\n";
             }
         }
-
-        $this->command->info('Wilayas and communes seeded successfully.');
+        
+        echo "Seeder completed successfully!\n";
     }
 }

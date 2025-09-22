@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         
         // Then call the ObjectItemSeeder to link items to categories.
         $this->call(ObjectItemSeeder::class);
+
+        $this->call(CommunSeeder::class);
     }
 }

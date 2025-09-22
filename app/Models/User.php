@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'type', // 'user' or 'admin'
+        'is_donator',
     ];
 
     /**

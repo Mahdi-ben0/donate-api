@@ -35,6 +35,8 @@ class PostController extends Controller
             'address' => 'required|string',
             'wilaya_id' => 'required|exists:wilayas,id',
             'commun_id' => 'required|exists:communs,id',
+            'object_item_id' => 'required|exists:object_items,id',
+            'category_id' => 'required|exists:categories,id',
             'condition' => 'required|string|in:broken,worn,good,like-new,new',
             'avalibility' => 'required|string|in:weekend,weekdays-evenings,daytimes-on-weekdays,flexible',
             'image_paths' => 'required|array',
@@ -51,6 +53,8 @@ class PostController extends Controller
         }
 
         $validated['image_paths'] = $image_paths;
+        $validated['status'] = 'availble';
+        $validated['user_id'] = $request->user()->id;
 
         $post = Post::create($validated);
 

@@ -18,9 +18,13 @@ return new class extends Migration
             $table->string('address');
             $table->foreignId('wilaya_id')->constrained();
             $table->foreignId('commun_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('object_item_id')->constrained();
             $table->enum('condition', ['broken', 'worn', 'good', 'like-new', 'new']);
             $table->enum('avalibility', ['weekend', 'weekdays-evenings', 'daytimes-on-weekdays', 'flexible']);
             $table->json('image_paths');
+            $table->foreignId('user_id')->constrained();
+            $table->enum('status', ['draft', 'availble', 'unavailble', 'donated'])->default('draft');
             $table->timestamps();
         });
     }

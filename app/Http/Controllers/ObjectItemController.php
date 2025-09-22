@@ -13,6 +13,8 @@ class ObjectItemController extends Controller
     public function index()
     {
         //
+        $objectItems = ObjectItem::all();
+        return response()->json($objectItems);
     }
 
     /**

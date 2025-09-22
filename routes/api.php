@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WilayaController;
 use App\Http\Controllers\CommunController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ObjectItemController;
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
@@ -17,12 +19,15 @@ Route::get('/userT', function () {
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/getUserfromToken', [UserController::class]);
+    Route::get('/getUserfromToken', [UserController::class, 'getUserFromToken']);
     Route::post('/logout', [LoginController::class, 'logout']);
 
 
     Route::get('/wilayas', [WilayaController::class, 'index']);
     Route::get('/communs', [CommunController::class, 'index']);
+
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/objectItems', [ObjectItemController::class, 'index']);
 
     Route::post('/posts', [PostController::class, 'store']);
 
