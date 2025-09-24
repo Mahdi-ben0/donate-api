@@ -10,10 +10,12 @@ class ObjectItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $objectItems = ObjectItem::all();
+        
+        $objectItems = ObjectItem::where('category_id', $request->category_id)->get();
+        
         return response()->json($objectItems);
     }
 

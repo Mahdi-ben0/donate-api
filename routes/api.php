@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/objectItems', [ObjectItemController::class, 'index']);
 
     Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/posts', [PostController::class, 'index']);
 
     // Example protected route for admin
     Route::get('/admin', function () {

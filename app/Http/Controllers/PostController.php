@@ -10,9 +10,47 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $query = Post::query();
+        
+        if($request->wilaya_id){
+            $query->where('wilaya_id', $request->wilaya_id);
+        }
+        if($request->commun_id){
+            $query->where('commun_id', $request->commun_id);
+        }
+        if($request->category_id){
+            $query->where('category_id', $request->category_id);
+        }
+        if($request->object_item_id){
+            $query->where('object_item_id', $request->object_item_id);
+        }
+        if($request->status){
+            $query->where('status', $request->status);
+        }
+        if($request->user_id){
+            $query->where('user_id', $request->user_id);
+        }
+        if($request->condition){
+            $query->where('condition', $request->condition);
+        }
+        if($request->avalibility){
+            $query->where('avalibility', $request->avalibility);
+        }
+
+        if($request->search){
+            $query->where('title', 'like', '%'.$request->search.'%');
+        }
+
+        if($request->sort){
+            $query->orderBy('created_at', $request->sort);
+        }
+
+        $posts = $query->paginate(15);
+
+        return response()->json($posts);
     }
 
     /**
