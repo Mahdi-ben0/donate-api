@@ -105,6 +105,8 @@ class PostController extends Controller
     public function show(post $post)
     {
         //
+        $post->load('user', 'wilaya', 'commun', 'category', 'objectItem');
+        return response()->json($post);
     }
 
     /**

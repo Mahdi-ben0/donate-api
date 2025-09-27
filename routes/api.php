@@ -20,6 +20,7 @@ Route::get('/userT', function () {
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/getUserfromToken', [UserController::class, 'getUserFromToken']);
+    Route::get('/getUserProfile', [UserController::class, 'getUserProfile']);
     Route::post('/logout', [LoginController::class, 'logout']);
 
 
@@ -31,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/{post}', [PostController::class, 'show']);
 
     // Example protected route for admin
     Route::get('/admin', function () {

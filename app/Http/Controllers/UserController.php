@@ -12,4 +12,9 @@ class UserController extends Controller
         $user = Auth::user();
         return response()->json($user);
     }   
+
+    function getUserProfile(){
+        $user = Auth::user();
+        return response()->json($user);
+    }
 }
