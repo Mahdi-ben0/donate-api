@@ -8,5 +8,5 @@ class commun extends Model
 {
     //
 
-    protected $fillable = ['name', 'wilaya_id'];
+    protected $fillable = ['name', 'wilaya_id', 'name_ar'];
 }

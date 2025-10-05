@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json('image_paths');
             $table->foreignId('user_id')->constrained();
             $table->enum('status', ['draft', 'availble', 'unavailble', 'donated'])->default('draft');
+            $table->enum('type', ['donate', 'request'])->default('donate');
             $table->timestamps();
         });
     }

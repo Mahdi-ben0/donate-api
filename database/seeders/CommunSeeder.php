@@ -1,11 +1,11 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Wilaya;
+use App\Models\Commun;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Wilaya;
-use App\Models\Commun;
 
 class CommunSeeder extends Seeder
 {
@@ -24,7 +24,8 @@ class CommunSeeder extends Seeder
             $wilayaNameAscii = $entry['wilaya_name_ascii'];
             $wilayaCode = $entry['wilaya_code'];
             $communeNameAscii = $entry['commune_name_ascii'];
-            
+            $communeNameAr = $entry['commune_name'];
+            $wilayaNameAr = $entry['wilaya_name'];
             // Check if wilaya already exists in database
             $wilaya = Wilaya::where('name', $wilayaNameAscii)->first();
             
@@ -32,6 +33,7 @@ class CommunSeeder extends Seeder
                 // Create new wilaya if it doesn't exist
                 $wilaya = Wilaya::create([
                     'name' => $wilayaNameAscii,
+                    'name_ar' => $wilayaNameAr,
                     'code' => $wilayaCode
                 ]);
                 
@@ -47,6 +49,7 @@ class CommunSeeder extends Seeder
                 // Create new commune
                 Commun::create([
                     'name' => $communeNameAscii,
+                    'name_ar' => $communeNameAr,
                     'wilaya_id' => $wilaya->id
                 ]);
                 

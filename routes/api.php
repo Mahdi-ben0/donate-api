@@ -9,6 +9,7 @@ use App\Http\Controllers\CommunController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ObjectItemController;
+use App\Http\Controllers\RequestController;
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
@@ -33,6 +34,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts', [PostController::class, 'index']);
     Route::get('/posts/{post}', [PostController::class, 'show']);
+
+    Route::post('/requests', [RequestController::class, 'createRequest']);
+    Route::get('/requests', [RequestController::class, 'index']);
+    Route::get('/requests/{request}', [RequestController::class, 'show']);
+    Route::get('/requests/post/{post_id}', [RequestController::class, 'getRequestsByPostId']);
+    Route::get('/requests/user/{user_id}', [RequestController::class, 'getRequestsByUserId']);
+    Route::put('/requests/{request}/accept', [RequestController::class, 'acceptRequest']);
+    Route::put('/requests/{request}/reject', [RequestController::class, 'rejectRequest']);
+    Route::put('/requests/{request}', [RequestController::class, 'update']);
+    Route::delete('/requests/{request}', [RequestController::class, 'destroy']);
 
     // Example protected route for admin
     Route::get('/admin', function () {
